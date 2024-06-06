@@ -41,13 +41,15 @@ public class SignInActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, mode_private);
         editor = sharedPreferences.edit();
 
-        String savedUser = sharedPreferences.getString(KEY_USER,  null);
-        String savedPassword = sharedPreferences.getString(KEY_PASSWORD,  null);
-
 
         btn_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String savedUser = sharedPreferences.getString(KEY_USER,  null);
+                String savedPassword = sharedPreferences.getString(KEY_PASSWORD,  null);
+                String savedEmail = sharedPreferences.getString(KEY_EMAIL,  null);
+                String savedBirthday = sharedPreferences.getString(KEY_BIRTHDAY,  null);
 
                 String info_edt_user = edt_signin_user.getText().toString().trim();
                 String info_edt_password = edt_signin_password.getText().toString().trim();
@@ -61,16 +63,15 @@ public class SignInActivity extends AppCompatActivity {
                 }else if (!validarEmail(info_edt_email) || info_edt_email.equals("")){
                     Toast.makeText(SignInActivity.this,"email no permitido", Toast.LENGTH_SHORT).show();
                 }else
-                    if (savedUser != null && savedPassword != null){
-                        editor.putString( KEY_USER, info_edt_user);
-                        editor.putString(KEY_PASSWORD, info_edt_password);
-                        editor.putString(KEY_EMAIL, info_edt_email);
-                        editor.putString(KEY_BIRTHDAY, info_edt_birthday);
-                        editor.commit();
-                        Toast.makeText(SignInActivity.this, "Credenciales guardadas", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignInActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                }
+                    editor.putString(KEY_USER, info_edt_user);
+                    editor.putString(KEY_PASSWORD, info_edt_password);
+                    editor.putString(KEY_EMAIL, info_edt_email);
+                    editor.putString(KEY_BIRTHDAY, info_edt_birthday);
+                    editor.commit();
+                    Toast.makeText(SignInActivity.this, "Credenciales guardadas", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignInActivity.this, LoginActivity.class);
+                    startActivity(intent);
+
             }
         });
 
