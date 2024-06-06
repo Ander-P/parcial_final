@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         btn_login =findViewById(R.id.btn_login);
         btn_register =findViewById(R.id.btn_register);
 
-        sharedPreferences = getSharedPreferences( SHARED_PREF_NAME, mode_private);
-
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,16 +57,17 @@ public class LoginActivity extends AppCompatActivity {
                 if (info_edt_user.isEmpty() || info_edt_password.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Rellena los cmapos vacios", Toast.LENGTH_SHORT).show();
                 }else{
-                    String savedUser = sharedPreferences.getString(KEY_USER, info_edt_user);
-                    String savedPassword = sharedPreferences.getString(KEY_PASSWORD, info_edt_password);
+                    sharedPreferences = getSharedPreferences( SHARED_PREF_NAME, mode_private);
+
+                    String savedUser = sharedPreferences.getString(KEY_USER, "");
+                    String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
 
                     //verificamos si hay datos en el sharedPreference
                     //y si son iguales a los datos ingresados
                     if (savedUser != null && savedPassword != null && info_edt_user.equals(savedUser) && info_edt_password.equals(savedPassword)){
-
                         Toast.makeText(LoginActivity.this, "estas nitido", Toast.LENGTH_SHORT).show();
-                        /*Intent intent = new Intent(LoginActivity.this, );
-                        startActivity(intent);*/
+                        Intent intent = new Intent(LoginActivity.this, inicio.class);
+                        startActivity(intent);
                     }else {
                         //Usuario/contrasena incorrecta
                         Toast.makeText(LoginActivity.this, "usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
