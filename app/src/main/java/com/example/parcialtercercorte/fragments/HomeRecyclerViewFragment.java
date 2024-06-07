@@ -7,9 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.parcialtercercorte.R;
 import com.example.parcialtercercorte.adaptadores.CharacterAdapter;
 import com.example.parcialtercercorte.clases.Character;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +40,7 @@ public class HomeRecyclerViewFragment extends Fragment {
 
     private RecyclerView rcv_characters;
     private List<Character> listaUsuario;
+    private CharacterAdapter usuarioAdaptador;
 
     public HomeRecyclerViewFragment() {
         // Required empty public constructor
@@ -69,15 +81,9 @@ public class HomeRecyclerViewFragment extends Fragment {
         // Initialize RecyclerView
         rcv_characters = view.findViewById(R.id.rcv_characters);
 
-        // Initialize data
         listaUsuario = new ArrayList<>();
-        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/72.jpeg", "Miguel", "Movil", "1"));
-        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/120.jpeg", "Camilo", "Ingles", "2"));
-        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/190.jpeg", "Caleb", "IA", "3"));
-        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/241.jpeg", "Anthony", "Calculo", "4"));
-
         // Set up the adapter
-        CharacterAdapter usuarioAdaptador = new CharacterAdapter(listaUsuario, new CharacterAdapter.OnItemClickListener() {
+         usuarioAdaptador = new CharacterAdapter(listaUsuario, new CharacterAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Character item) {
                 // Handle item click, e.g., show a description or navigate to another fragment/activity
@@ -88,6 +94,49 @@ public class HomeRecyclerViewFragment extends Fragment {
         rcv_characters.setLayoutManager(new LinearLayoutManager(getContext()));
         rcv_characters.setAdapter(usuarioAdaptador);
 
+        fetchDataFromApi();
+
         return view;
     }
+
+    private void fetchDataFromApi() {
+        String url = "https://nova-dev-420721.uc.r.appspot.com/marvel/characters";
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray charactersArray = response.getJSONArray("data");
+                            System.out.println("Arreglo pjs    " + charactersArray);
+                            for (int i = 0; i < charactersArray.length(); i++) {
+                                JSONObject characterObject = charactersArray.getJSONObject(i);
+
+                                String id = characterObject.getString("id");
+                                String name = characterObject.getString("name");
+                                String description = characterObject.getString("description");
+                                JSONObject thumbnail = characterObject.getJSONObject("thumbnail");
+                                String imageUrl = thumbnail.getString("path") + "." + thumbnail.getString("extension");
+
+                                listaUsuario.add(new Character(imageUrl, name, description, id));
+                            }
+
+                            // Notify adapter about data changes
+                            usuarioAdaptador.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        queue.add(jsonObjectRequest);
+    }
+
 }
