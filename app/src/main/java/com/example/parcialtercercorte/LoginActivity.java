@@ -87,14 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d("LoginActivity", "Respuesta de la API: " + response.toString());
                         try {
-                            String name = response.getString("name");
                             String email = response.getString("email");
                             String userName = response.getString("userName");
                             String password = response.getString("password");
                             String birthday = response.getString("birthday");
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("name", name);
                             editor.putString("email", email);
                             editor.putString("userName", userName);
                             editor.putString("password", password);
