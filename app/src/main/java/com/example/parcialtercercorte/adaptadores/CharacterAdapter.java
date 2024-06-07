@@ -10,11 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.parcialtercercorte.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
     private List<Character> characters;
+    private List<Character> characterListFull; // Lista completa para soportar el filtrado
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -23,6 +26,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     public CharacterAdapter(List<Character> characters, OnItemClickListener listener) {
         this.characters = characters;
+        this.characterListFull = new ArrayList<>(characters); // Inicializa la lista completa
         this.listener = listener;
     }
 
@@ -43,6 +47,23 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     public int getItemCount() {
         return characters.size();
     }
+
+    public void filter(String text) {
+        characters.clear();
+        if (text.isEmpty()) {
+            characters.addAll(characterListFull);
+        } else {
+            text = text.toLowerCase();
+            for (Character character : characterListFull) {
+                if (character.getNombre().toLowerCase().contains(text)) {
+                    characters.add(character);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView img_character;
