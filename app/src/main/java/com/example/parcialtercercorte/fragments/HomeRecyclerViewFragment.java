@@ -1,14 +1,18 @@
 package com.example.parcialtercercorte.fragments;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.parcialtercercorte.R;
+import com.example.parcialtercercorte.adaptadores.CharacterAdapter;
+import com.example.parcialtercercorte.clases.Character;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +21,14 @@ import com.example.parcialtercercorte.R;
  */
 public class HomeRecyclerViewFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView rcv_characters;
+    private List<Character> listaUsuario;
 
     public HomeRecyclerViewFragment() {
         // Required empty public constructor
@@ -38,7 +42,6 @@ public class HomeRecyclerViewFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment HomeRecyclerViewFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HomeRecyclerViewFragment newInstance(String param1, String param2) {
         HomeRecyclerViewFragment fragment = new HomeRecyclerViewFragment();
         Bundle args = new Bundle();
@@ -61,6 +64,30 @@ public class HomeRecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_recycler_view, container, false);
+
+        // Initialize RecyclerView
+        rcv_characters = view.findViewById(R.id.rcv_characters);
+
+        // Initialize data
+        listaUsuario = new ArrayList<>();
+        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/72.jpeg", "Miguel", "Movil", "1"));
+        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/120.jpeg", "Camilo", "Ingles", "2"));
+        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/190.jpeg", "Caleb", "IA", "3"));
+        listaUsuario.add(new Character("https://rickandmortyapi.com/api/character/avatar/241.jpeg", "Anthony", "Calculo", "4"));
+
+        // Set up the adapter
+        CharacterAdapter usuarioAdaptador = new CharacterAdapter(listaUsuario, new CharacterAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Character item) {
+                // Handle item click, e.g., show a description or navigate to another fragment/activity
+            }
+        });
+
+        // Set up RecyclerView
+        rcv_characters.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcv_characters.setAdapter(usuarioAdaptador);
+
+        return view;
     }
 }
