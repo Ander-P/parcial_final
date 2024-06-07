@@ -6,10 +6,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,6 +38,8 @@ public class HomeRecyclerViewFragment extends Fragment {
     private RecyclerView rcv_characters;
     private List<Character> listaUsuario;
     private CharacterAdapter usuarioAdaptador;
+    EditText edt_search_character;
+    ImageButton btn_search_character;
 
     public HomeRecyclerViewFragment() {
         // Required empty public constructor
@@ -57,6 +65,8 @@ public class HomeRecyclerViewFragment extends Fragment {
 
         // Initialize RecyclerView
         rcv_characters = view.findViewById(R.id.rcv_characters);
+        edt_search_character = view.findViewById(R.id.edt_search_character);
+        btn_search_character = view.findViewById(R.id.btn_search_character);
 
         listaUsuario = new ArrayList<>();
         // Set up the adapter
@@ -75,6 +85,26 @@ public class HomeRecyclerViewFragment extends Fragment {
         rcv_characters.setAdapter(usuarioAdaptador);
 
         fetchDataFromApi();
+
+        edt_search_character.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                usuarioAdaptador.filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        btn_search_character.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usuarioAdaptador.filter(edt_search_character.getText().toString());
+            }
+        });
 
         return view;
     }
