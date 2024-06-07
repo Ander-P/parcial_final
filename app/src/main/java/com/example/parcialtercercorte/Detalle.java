@@ -31,7 +31,7 @@ public class Detalle extends AppCompatActivity {
 
         txt_name_character.setText(dato.getNombre());
         txt_id_character.setText(dato.getId());
-        txt_description_character.setText(dato.getDetalle());
+        txt_description_character.setText(dato.getDescripcion());
         Picasso.get().load(dato.getImagen()).into(img_character);
 
     }

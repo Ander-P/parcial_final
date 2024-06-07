@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Character implements Serializable {
     private String imagen;
     private String nombre;
-    private String detalle;
+    private String descripcion;
     private String id;
 
     public Character(String imagen, String nombre, String detalle, String id) {
         this.imagen = imagen;
         this.nombre = nombre;
-        this.detalle = detalle;
+        this.descripcion = descripcion;
         this.id = id;
     }
 
@@ -31,12 +31,12 @@ public class Character implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDetalle() {
-        return detalle;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getId() {
