@@ -1,5 +1,6 @@
 package com.example.parcialtercercorte;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         btn_sign_in.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onClick(View view) {
 
