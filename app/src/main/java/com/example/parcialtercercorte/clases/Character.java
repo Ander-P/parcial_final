@@ -8,7 +8,7 @@ public class Character implements Serializable {
     private String descripcion;
     private String id;
 
-    public Character(String imagen, String nombre, String detalle, String id) {
+    public Character(String imagen, String nombre, String descripcion, String id) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.descripcion = descripcion;
