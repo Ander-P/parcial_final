@@ -18,7 +18,7 @@ import com.example.parcialtercercorte.LoginActivity;
 import com.example.parcialtercercorte.R;
 public class SettingFragment extends Fragment {
     public static final String SHARED_PREF_NAME= "userData";
-    public static final String KEY_USER = "user";
+    public static final String KEY_USERNAME = "userName";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_BIRTHDAY = "birthday";
@@ -44,13 +44,13 @@ public class SettingFragment extends Fragment {
 
         //recuperamos los datos guardados en sharedPreference
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, mode_private);
-        String savedUser = sharedPreferences.getString(KEY_USER,  null);
+        String savedUserName = sharedPreferences.getString(KEY_USERNAME,  null);
         String savedPassword = sharedPreferences.getString(KEY_PASSWORD,  null);
         String savedEmail = sharedPreferences.getString(KEY_EMAIL,  null);
         String savedBirthday = sharedPreferences.getString(KEY_BIRTHDAY,  null);
 
         //mostramos los datos en cada textView
-        txt_user_data.setText(savedUser);
+        txt_user_data.setText(savedUserName);
         txt_password_data.setText(savedPassword);
         txt_email_data.setText(savedEmail);
         txt_birthday_data.setText(savedBirthday);

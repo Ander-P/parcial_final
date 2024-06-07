@@ -11,13 +11,13 @@
     >
 
     <TextView
-        android:layout_width="45dp"
+        android:layout_width="49dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_marginLeft="60dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/marvel_font"
-        android:text="USER"
+        android:text="EMAIL"
         android:textColor="@color/white"
         android:textSize="30sp" />
 
@@ -27,7 +27,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="60dp"
         android:layout_marginBottom="30dp"
-        android:hint="username123"
+        android:hint="example@gmail.com"
         android:textColorHint="@android:color/darker_gray"
         android:padding="10dp"
         android:textColor="@color/white"
@@ -84,8 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Do you not have an account?"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_register"
