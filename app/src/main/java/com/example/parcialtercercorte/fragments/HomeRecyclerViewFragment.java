@@ -1,5 +1,6 @@
 package com.example.parcialtercercorte.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.parcialtercercorte.Detalle;
 import com.example.parcialtercercorte.R;
 import com.example.parcialtercercorte.adaptadores.CharacterAdapter;
 import com.example.parcialtercercorte.clases.Character;
@@ -62,6 +64,9 @@ public class HomeRecyclerViewFragment extends Fragment {
             @Override
             public void OnItemClick(Character item) {
                 // Handle item click, e.g., show a description or navigate to another fragment/activity
+                Intent intent = new Intent(getContext(), Detalle.class);
+                intent.putExtra("Usuario", item);
+                startActivity(intent);
             }
         });
 
@@ -92,10 +97,9 @@ public class HomeRecyclerViewFragment extends Fragment {
 
                                 String id = characterObject.getString("id");
                                 String name = characterObject.getString("name");
-                                String description = characterObject.optString("description", "No description available");
+                                String description = characterObject.getString("description");
                                 JSONObject thumbnail = characterObject.getJSONObject("thumbnail");
                                 String imageUrl = thumbnail.getString("path") + "." + thumbnail.getString("extension");
-                                Log.d("imageUrl", "IMAGEN: " + imageUrl);
                                 listaUsuario.add(new Character(imageUrl, name, description, id));
                             }
 
