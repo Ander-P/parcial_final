@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.parcialtercercorte.R;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +62,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
         notifyDataSetChanged();
     }
 
-
+    public void updateData(List<Character> newCharacters) {
+        this.characters = newCharacters;
+        this.characterListFull = new ArrayList<>(newCharacters);
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView img_character;

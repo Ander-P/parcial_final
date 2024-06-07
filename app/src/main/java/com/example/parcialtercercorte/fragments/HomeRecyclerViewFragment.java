@@ -114,14 +114,13 @@ public class HomeRecyclerViewFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
-        // Cambiar JsonObjectRequest a JsonArrayRequest
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("API Response", "Respuesta de la API: " + response.toString());
                         try {
-                            // Directamente procesar el JSONArray
+                            List<Character> newCharacters = new ArrayList<>();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject characterObject = response.getJSONObject(i);
 
@@ -130,11 +129,10 @@ public class HomeRecyclerViewFragment extends Fragment {
                                 String description = characterObject.getString("description");
                                 JSONObject thumbnail = characterObject.getJSONObject("thumbnail");
                                 String imageUrl = thumbnail.getString("path") + "." + thumbnail.getString("extension");
-                                listaUsuario.add(new Character(imageUrl, name, description, id));
+                                newCharacters.add(new Character(imageUrl, name, description, id));
                             }
 
-                            // Notificar al adaptador sobre los cambios de datos
-                            usuarioAdaptador.notifyDataSetChanged();
+                            usuarioAdaptador.updateData(newCharacters); // Actualiza los datos en el adaptador
                         } catch (JSONException e) {
                             Log.e("JSON Error", "Error procesando JSON", e);
                         }
@@ -145,8 +143,6 @@ public class HomeRecyclerViewFragment extends Fragment {
                 Log.e("API Error", "Error al obtener datos de la API: " + error.getMessage());
             }
         });
-
         queue.add(jsonArrayRequest);
     }
-
 }

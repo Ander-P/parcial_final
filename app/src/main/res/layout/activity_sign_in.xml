@@ -55,6 +55,7 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:inputType="textPassword"
         android:background="@drawable/edittext_background"
         />
 
